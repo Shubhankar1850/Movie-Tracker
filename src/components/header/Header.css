@@ -1,0 +1,27 @@
+.header{
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: fit-content;
+    padding: 10px;
+    background: #000515;
+    z-index: 5;
+    &>div>a{
+        color: rgba(255, 255, 255, 0.7);
+        margin: auto 0;
+        &:hover{
+            color: white;
+        }
+    }
+}
+.frosted-glass {
+    background: rgba(255, 255, 255, 0.1); /* Light transparent background */
+    backdrop-filter: blur(10px); /* The magic blur */
+    -webkit-backdrop-filter: blur(10px); /* For Safari support */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Light border for shine */
+    border-radius: 12px;
+    padding: 16px;
+    color: white; /* Optional, depends on background */
+  }

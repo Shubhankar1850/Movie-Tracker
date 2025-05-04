@@ -1,0 +1,14 @@
+.movie-details-page {
+    padding: 2em 10%
+    ;
+    background-color: #0b0c10;
+  }
+  
+  .ant-list {
+    background: transparent !important;
+  }
+  
+  .ant-list-item {
+    border: none !important;
+  }
+  

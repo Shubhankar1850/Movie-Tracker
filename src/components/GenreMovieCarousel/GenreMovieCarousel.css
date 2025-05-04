@@ -1,0 +1,43 @@
+.container{
+    margin: 35px 15px 0 3%;
+}
+.carousel{
+    overflow-x: auto;
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+}
+.carousel-header {
+    margin-bottom: 24px;
+    display: flex;
+    color: white;
+    justify-content: space-between;
+  }
+  
+  .carousel-title {
+    color: white;
+    margin: 0;
+    font-weight: 600;
+  }
+  
+  .see-more-button {
+    color: #8197a4;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+  .see-more-button:hover {
+    color: white !important;
+  }
+  
+  .see-more-icon {
+    margin-left: 4px;
+  }
+
+  @media screen and (max-width:650px){
+    .container{
+        margin-left: 2.5%;
+    }
+  }
