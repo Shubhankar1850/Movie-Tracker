@@ -40,11 +40,17 @@
   font-size: 18px;
 }
 
+
 .custom-search .ant-input-search-button:hover {
   color: white !important;
   background: transparent !important;
 }
-
+.custom-search .ant-input-clear-icon {
+  color: rgba(255, 255, 255, 0.7);
+}
+.custom-search  .ant-input-clear-icon:hover{
+  color: white !important;
+}
 /* Dropdown styles */
 .custom-search-dropdown {
   background-color: #111827 !important;

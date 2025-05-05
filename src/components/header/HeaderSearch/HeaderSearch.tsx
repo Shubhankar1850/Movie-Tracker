@@ -13,12 +13,13 @@ interface HeaderSearchProps {
 }
 
 const HeaderSearch: React.FC<HeaderSearchProps> = ({ isMobile, menuClose }) => {
+  const [inputValue, setInputValue] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [options, setOptions] = useState<AutoCompleteProps['options']>([]);
   const navigate = useNavigate();
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
-
+  const ErrorComp = (text:string) => { return { value:"error", label:(<div className="search-result-item"><span>{text}</span></div>)}}
   useEffect(() => {
     const fetchResults = async () => {
       if (!debouncedSearchTerm) {
@@ -46,12 +47,12 @@ const HeaderSearch: React.FC<HeaderSearchProps> = ({ isMobile, menuClose }) => {
           }));
 
           setOptions(formatted);
-        } else {
-          setOptions([]);
+        } else if(res.Response=="False"){
+          setOptions([ErrorComp("Movie not found")]);
         }
       } catch (error) {
         console.error(error);
-        setOptions([]);
+        setOptions([ErrorComp("Something went wrong please try again")]);
       }
     };
 
@@ -59,16 +60,20 @@ const HeaderSearch: React.FC<HeaderSearchProps> = ({ isMobile, menuClose }) => {
   }, [debouncedSearchTerm]);
 
   const handleSearch = (value: string) => {
+    setInputValue(value); 
     setSearchTerm(value);
   };
 
   const onSelect = (imdbID: string) => {
     menuClose && menuClose(false);
     navigate(`/movies/${imdbID}`);
+    setInputValue('');
+    setSearchTerm('');
   };
 
   return (
     <AutoComplete
+      value={inputValue}
       popupClassName="custom-search-dropdown"
       popupMatchSelectWidth={false}
       style={{ width: isMobile ? "80%" : 300 }}
