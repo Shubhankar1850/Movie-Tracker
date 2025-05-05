@@ -56,9 +56,9 @@ function Header() {
                 </button>
             </Flex>
 
-            {  !isDesktop && <div className="mobile-menu">
+            {  !isDesktop && <div className="mobile-menu" onClick={() => setMenuOpen(false)}>
                 <div className="mobile-menu-content">
-                    <HeaderSearch isMobile={true} />
+                    <HeaderSearch isMobile={true} menuClose={setMenuOpen}/>
                     <div className="mobile-nav">
                         <Link to={"/"} onClick={() => setMenuOpen(false)}>Movies</Link>
                         <Link to={"/favorites"} onClick={() => setMenuOpen(false)}>Favorites</Link>

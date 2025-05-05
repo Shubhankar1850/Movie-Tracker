@@ -9,9 +9,10 @@ import { useNavigate } from 'react-router';
 
 interface HeaderSearchProps {
   isMobile?: boolean;
+  menuClose?: Function;
 }
 
-const HeaderSearch: React.FC<HeaderSearchProps> = ({ isMobile }) => {
+const HeaderSearch: React.FC<HeaderSearchProps> = ({ isMobile, menuClose }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [options, setOptions] = useState<AutoCompleteProps['options']>([]);
   const navigate = useNavigate();
@@ -62,6 +63,7 @@ const HeaderSearch: React.FC<HeaderSearchProps> = ({ isMobile }) => {
   };
 
   const onSelect = (imdbID: string) => {
+    menuClose && menuClose(false);
     navigate(`/movies/${imdbID}`);
   };
 

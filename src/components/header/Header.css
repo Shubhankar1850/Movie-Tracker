@@ -73,20 +73,22 @@
     top: 56px;
     left: 0;
     width: 100%;
-    background: #000515;
+    background-color: transparent;
     z-index: 90;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 .menu-open .mobile-menu {
-    max-height: 300px;
+    max-height: 100vh;
     overflow-y: auto;
+    height: 100vh;
 }
 
 .mobile-menu-content {
+    background: #000515;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     padding: 20px;
     display: flex;
     flex-direction: column;

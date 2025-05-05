@@ -121,6 +121,7 @@
   }
   
   .search-result-item {
+    max-width: 80vw;
     padding: 6px 8px;
     flex-direction: column;
     align-items: flex-start;

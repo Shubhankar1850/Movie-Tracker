@@ -3,10 +3,11 @@ import { useFavorites } from "../CustomHooks/useFavorites";
 import { useDispatch, useSelector } from "react-redux";
 import { getFavorites } from "../store/slices/getFavoriteSlice";
 import { AppDispatch, RootState } from "../store/store";
-import { Col, Row } from "antd";
+import { Col, Row} from "antd";
 import MovieCard from "../components/GenreMovieCarousel/MovieCard/MovieCard";
 import { useNavigate } from "react-router";
 import LoadingPage from "../components/Loading/Loading";
+import BookmarkEmptyPage from "../components/Empty/BookmarkEmptyPage";
 
 function Favorites() {
     const {favorites, addFavorite, removeFavorite, isFavorite} = useFavorites();
@@ -25,16 +26,23 @@ function Favorites() {
         else
           addFavorite({imdbID:imdbID});
       }
+    const returnPages = () =>{
+        if(favorites.length<1)
+            return <BookmarkEmptyPage/>
+        else if (loading) 
+            return <LoadingPage/>
+        else
+            return <Row gutter={[16, 16]}>
+               {favMovies.map((movie) => (
+                <Col key={movie.imdbID} xs={24} sm={12} md={4} lg={4} style={{ display: 'flex', justifyContent: 'center' }}>
+                    <MovieCard movie={movie}  onClick={()=>navigate(`/movies/${movie.imdbID}`)} bookmarked={isFavorite(movie.imdbID)} handleBookmarkClick={handleBookmarkClick}/>
+                </Col>))}</Row>
+        }
 
     return (
         <div style={{ padding: 20 }}>
-        <Row gutter={[16, 16]}>
-            {loading? <LoadingPage/> :favMovies.map((movie) => (
-            <Col key={movie.imdbID} xs={24} sm={12} md={4} lg={4} style={{ display: 'flex', justifyContent: 'center' }}>
-                <MovieCard movie={movie}  onClick={()=>navigate(`/movies/${movie.imdbID}`)} bookmarked={isFavorite(movie.imdbID)} handleBookmarkClick={handleBookmarkClick}/>
-            </Col>
-            ))}
-        </Row>
+        <h3 style={{color:"white"}}>Your Favorites</h3>
+            {returnPages()}
         </div>
     );
 }
