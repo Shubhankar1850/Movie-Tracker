@@ -1,69 +1,89 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AutoComplete, Input } from 'antd';
 import type { AutoCompleteProps } from 'antd';
-import "./HeaderSearch.css"
+import "./HeaderSearch.css";
+import useDebounce from '../../../CustomHooks/useDebounce';
+import movieApi from '../../../services/api';
+import { useNavigate } from 'react-router';
 
-const getRandomInt = (max: number, min = 0) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-const searchResult = (query: string) =>
-  Array.from({ length: getRandomInt(5) })
-    .join('.')
-    .split('.')
-    .map((_, idx) => {
-      const category = `${query}${idx}`;
-      return {
-        value: category,
-        label: (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
-          >
-            <span>
-              Found {query} on{' '}
-              <a
-                href={`https://s.taobao.com/search?q=${query}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {category}
-              </a>
-            </span>
-            <span>{getRandomInt(200, 100)} results</span>
-          </div>
-        ),
-      };
-    });
+interface HeaderSearchProps {
+  isMobile?: boolean;
+}
 
-const HeaderSearch: React.FC = () => {
+const HeaderSearch: React.FC<HeaderSearchProps> = ({ isMobile }) => {
+  const [searchTerm, setSearchTerm] = useState('');
   const [options, setOptions] = useState<AutoCompleteProps['options']>([]);
+  const navigate = useNavigate();
+
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  useEffect(() => {
+    const fetchResults = async () => {
+      if (!debouncedSearchTerm) {
+        setOptions([]);
+        return;
+      }
+
+      try {
+        const res = await movieApi.fetchbyName(debouncedSearchTerm, 1);
+
+        if (res.Response === 'True' && res.Search) {
+          const formatted = res.Search.map((movie: any) => ({
+            value: movie.imdbID, 
+            label: (
+              <div className="search-result-item" key={movie.imdbID}>
+                <img 
+                  src={movie.Poster} 
+                  alt={movie.Title} 
+                  width="50" 
+                  style={{ marginRight: 8 }} 
+                />
+                <span>{movie.Title} ({movie.Year})</span>
+              </div>
+            ),
+          }));
+
+          setOptions(formatted);
+        } else {
+          setOptions([]);
+        }
+      } catch (error) {
+        console.error(error);
+        setOptions([]);
+      }
+    };
+
+    fetchResults();
+  }, [debouncedSearchTerm]);
 
   const handleSearch = (value: string) => {
-    setOptions(value ? searchResult(value) : []);
+    setSearchTerm(value);
   };
 
-  const onSelect = (value: string) => {
-    console.log('onSelect', value);
+  const onSelect = (imdbID: string) => {
+    navigate(`/movies/${imdbID}`);
   };
 
   return (
     <AutoComplete
-      popupMatchSelectWidth={252}
-      style={{ width: 300, margin:"auto"}}
+      popupClassName="custom-search-dropdown"
+      popupMatchSelectWidth={false}
+      style={{ width: isMobile ? "80%" : 300 }}
       options={options}
       onSelect={onSelect}
       onSearch={handleSearch}
-      size="large"
+      size={isMobile ? "middle" : "large"}
+      className={isMobile ? "mobile-search" : ""}
     >
       <Input.Search 
-        size="large" 
+        size={isMobile ? "middle" : "large"}
         placeholder="Search Movies"
         allowClear
         variant="borderless"
         className="custom-search" 
         enterButton
-        />
+      />
     </AutoComplete>
   );
 };

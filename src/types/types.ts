@@ -1,4 +1,4 @@
-// Define movie type
+// Define All frequently used types here
 export interface Rating {
     Source: string;
     Value: string;
@@ -38,3 +38,6 @@ export type Movie = {
     Year: string,
     Type: string
 }
+export type FavoriteMovie = {
+  imdbID: string;
+};

@@ -8,14 +8,17 @@ import { Movie } from "../../types/types";
 type IProps = {
   category: string;
   movies: Movie[];
+  handleBookmarkClick: Function;
+  isFavorite: Function;
 };
 
-function GenreMovieCarousel( {movies, category}: IProps) {
+function GenreMovieCarousel( {movies, category, isFavorite,  handleBookmarkClick}: IProps) {
   const navigate = useNavigate();
-
   const navigateOnClick = (imdbID: string)=>{
     navigate(`/movies/${imdbID}`);
   }
+
+
 
   return (
     <div>
@@ -28,7 +31,7 @@ function GenreMovieCarousel( {movies, category}: IProps) {
           </Button>
         </div>
         <Flex gap="middle" className="carousel">
-          {movies?.length>0 && movies.map(movie=><MovieCard movie={movie} onClick={navigateOnClick}/>)}
+          {movies?.length>0 && movies.map(movie=><MovieCard movie={movie} onClick={navigateOnClick} bookmarked={isFavorite(movie.imdbID)} handleBookmarkClick={handleBookmarkClick}/>)}
         </Flex>
       </div>
    </div>

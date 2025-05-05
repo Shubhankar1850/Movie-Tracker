@@ -4,7 +4,7 @@
 .carousel{
     overflow-x: auto;
     overflow-y: scroll;
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none;
     -ms-overflow-style: none;
 }
 .carousel-header {

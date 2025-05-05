@@ -3,6 +3,7 @@ import Home from './Pages/Home'
 import { Routes, Route } from "react-router";
 import Layout from './Pages/Layout';
 import MovieDetails from './Pages/MovieDetails/MovieDetails';
+import Favorites from './Pages/Favorites';
 
 function App() {
 
@@ -10,7 +11,7 @@ function App() {
     <Layout>
       <Routes>
         <Route path="/" element={<Home/>} />
-        <Route path='/favourites' element={<div>Favourite Place holder</div>}/>
+        <Route path='/favorites' element={<Favorites/>}/>
         <Route path="/movies/:id" element={<MovieDetails/>}/>
       </Routes>
     </Layout>
