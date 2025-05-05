@@ -57,7 +57,7 @@ function Header() {
             </Flex>
 
             {  !isDesktop && <div className="mobile-menu" onClick={() => setMenuOpen(false)}>
-                <div className="mobile-menu-content">
+                <div className="mobile-menu-content" onClick={(e) => e.stopPropagation()} >
                     <HeaderSearch isMobile={true} menuClose={setMenuOpen}/>
                     <div className="mobile-nav">
                         <Link to={"/"} onClick={() => setMenuOpen(false)}>Movies</Link>
