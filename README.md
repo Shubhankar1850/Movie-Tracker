@@ -23,7 +23,7 @@
 - 🎞️ View movie details (poster, year, etc.)
 - ⭐ Add and manage favorites
 - 📱 Mobile responsive design
-- ⚡ Smooth search experience with debounce and auto-complete
+- ⚡ Smooth search experience with debounce
 
 ---
 
